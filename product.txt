@@ -1,0 +1,312 @@
+import java.util.*;
+class Product
+{
+  Scanner sc=new Scanner(System.in);
+  final int max_prod=10;
+  String prodID[]=new String[max_prod];
+  String prodName[]=new String[max_prod];
+  String prodDesc[]=new String[max_prod];
+  int prodQty[]=new int[max_prod];
+  float prodCost[]=new float[max_prod];
+  int i=0;  //prodcut count variable;
+  public void addProduct(String pid,String pname,String pdesc,int pqty,float pcost)
+  {
+     if(i>=10)
+         System.out.println("No more space to add the product");
+     else
+     {
+     	prodID[i]=pid;
+     	prodName[i]=pname;
+     	prodDesc[i]=pdesc;
+     	prodQty[i]=pqty;
+     	prodCost[i]=pcost;
+     	i++;
+      }
+ }
+ public int viewProductsCount()
+  {
+      return i;
+  }
+ public void addProdQty(String pid,int qty)
+  {
+      for(int j=0;j<i;j++)
+      {
+          if(prodID[j].equalsIgnoreCase(pid))
+           {
+ 		prodQty[j]+=qty;
+                return;
+           }
+      }
+      System.out.println("Invalid Product ID");
+  }
+ public void reduceProdQty(String pid,int qty)
+  {
+      for(int j=0;j<i;j++)
+      {
+          if(prodID[j].equalsIgnoreCase(pid))
+           {
+ 		prodQty[j]-=qty;
+                return;
+           }
+      }
+      System.out.println("Invalid Product ID");
+  }
+ public void viewProductDetails(String pid)
+  {
+     for(int j=0;j<i;j++)
+      {
+          if(prodID[j].equalsIgnoreCase(pid))
+           {
+ 		System.out.println(prodID[j]+" "+prodName[j]+" "+prodDesc[j]+" "+prodQty[j]+" "+prodCost[j]);
+              return;
+           }
+      }
+      System.out.println("Invalid Product ID");
+
+  }
+public void listAllProductDetails()
+  {
+     if(i==0)
+      System.out.println("No products are added till now");
+     else
+       for(int j=0;j<i;j++)
+       {
+          
+         System.out.println(prodID[j]+" "+prodName[j]+" "+prodDesc[j]+" "+prodQty[j]+" "+prodCost[j]);
+              
+      }
+  }
+}
+public class ProductAssignment
+{
+  public static void main(String args[])
+  {
+     Product p=new Product();
+     Scanner sc=new Scanner(System.in);
+     String pid,pname,pdesc;
+     int pqty,ch;
+     float pcost;
+     while(true)
+     {
+       System.out.println("1.Add Product\n2.View Product\n3.List All Products\n4.Add Quantity\n5.Reduce Quantity\n6.Count Products\n7.Exit");
+     ch=sc.nextInt();
+     sc.nextLine();
+     switch(ch)
+     {
+       case 1:
+               pid=sc.nextLine();
+               pname=sc.nextLine();
+               pdesc=sc.nextLine();
+	       pqty=sc.nextInt();
+	       pcost=sc.nextFloat();
+               sc.nextLine();
+               p.addProduct(pid,pname,pdesc,pqty,pcost);
+               break;
+        case 2:
+	       pid=sc.nextLine();
+               p.viewProductDetails(pid);
+               break;
+        case 3:
+               p.listAllProductDetails();
+	       break;
+        case 4:
+               pid=sc.nextLine();
+	       pqty=sc.nextInt();
+	       sc.nextLine();
+               p.addProdQty(pid,pqty);
+               break;
+        case 5:
+               pid=sc.nextLine();
+               pqty=sc.nextInt();
+               sc.nextLine();
+               p.reduceProdQty(pid,pqty);
+               break;
+        case 6:
+               int count=p.viewProductsCount();
+               System.out.println(count);
+               break;
+        case 7:
+               System.exit(0);
+       }
+     }
+  }
+}
+....................................................................
+import java.util.Scanner;
+import java.util.HashMap;
+
+class Product {
+    private String name;
+    private String specification;
+    private double cost;
+    private int quantity;
+
+    public Product(String name, String specification, double cost, int quantity) {
+        this.name = name;
+        this.specification = specification;
+        this.cost = cost;
+        this.quantity = quantity;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSpecification() {
+        return specification;
+    }
+
+    public void setSpecification(String specification) {
+        this.specification = specification;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+}
+
+public class Inventorys{
+    private static HashMap<String, Product> inventory = new HashMap<>();
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        Product product1 = new Product("Phone", "iPhone 12", 999.99, 10);
+        Product product2 = new Product("Laptop", "MacBook Pro", 1499.99, 5);
+        Product product3 = new Product("Tablet", "iPad Pro", 799.99, 8);
+
+        inventory.put(product1.getName(), product1);
+        inventory.put(product2.getName(), product2);
+        inventory.put(product3.getName(), product3);
+
+        int choice = 0;
+        do {
+            System.out.println("\nInventory Management System Menu");
+            System.out.println("1. Product List\n2. Product Count\n3. View Product Details\n4. Edit Product\n5. Update Inventory\n6. Exit");
+            System.out.print("Enter your choice: ");
+            choice = input.nextInt();
+
+            switch (choice) {
+                case 1:
+                    productList();
+                    break;
+                case 2:
+                    System.out.print("Enter product name: ");
+                    String name = input.next();
+                    productCount(name);
+                    break;
+                case 3:
+                    System.out.print("Enter product name: ");
+                    name = input.next();
+                    viewProductDetails(name);
+                    break;
+                case 4:
+                    System.out.print("Enter product name: ");
+                    name = input.next();
+                    editProduct(name);
+                    break;
+                case 5:
+                    System.out.print("Enter product name: ");
+                    name = input.next();
+                    System.out.print("Enter quantity to add/delete: ");
+                    int quantity = input.nextInt();
+                    updateInventory(name, quantity);
+                    break;
+                case 6:
+                    System.out.println("Exiting Inventory Management System...");
+                    break;
+                    default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+                    }
+                    } while (choice != 6);
+                    }
+                    private static void productList() {
+                        System.out.println("\nProduct List");
+                        System.out.println("--------------------");
+                        for (String name : inventory.keySet()) {
+                            System.out.println(name);
+                        }
+                    }
+                    
+                    private static void productCount(String name) {
+                        if (inventory.containsKey(name)) {
+                            System.out.println("\nProduct Count");
+                            System.out.println("--------------------");
+                            System.out.println("Product: " + name);
+                            System.out.println("Quantity: " + inventory.get(name).getQuantity());
+                        } else {
+                            System.out.println("Product not found.");
+                        }
+                    }
+                    
+                    private static void viewProductDetails(String name) {
+                        if (inventory.containsKey(name)) {
+                            System.out.println("\nProduct Details");
+                            System.out.println("--------------------");
+                            System.out.println("Product: " + name);
+                            System.out.println("Specification: " + inventory.get(name).getSpecification());
+                            System.out.println("Cost: " + inventory.get(name).getCost());
+                            System.out.println("Quantity: " + inventory.get(name).getQuantity());
+                        } else {
+                            System.out.println("Product not found.");
+                        }
+                    }
+                    
+                    private static void editProduct(String name) {
+                        if (inventory.containsKey(name)) {
+                            Scanner input = new Scanner(System.in);
+                            Product product = inventory.get(name);
+                    
+                            System.out.print("Enter new name: ");
+                            String newName = input.next();
+                            product.setName(newName);
+                    
+                            System.out.print("Enter new specification: ");
+                            String newSpecification = input.next();
+                            product.setSpecification(newSpecification);
+                    
+                            System.out.print("Enter new cost: ");
+                            double newCost = input.nextDouble();
+                            product.setCost(newCost);
+                    
+                            inventory.remove(name);
+                            inventory.put(newName, product);
+                            System.out.println("Product updated successfully.");
+                        } else {
+                            System.out.println("Product not found.");
+                        }
+                    }
+                    
+                    private static void updateInventory(String name, int quantity) {
+                        if (inventory.containsKey(name)) {
+                            Product product = inventory.get(name);
+                            int currentQuantity = product.getQuantity();
+                            currentQuantity += quantity;
+                            product.setQuantity(currentQuantity);
+                            System.out.println("Inventory updated successfully.");
+                        } else {
+                            System.out.println("Product not found.");
+                        }
+                    }
+                    
+                }
+
+
+

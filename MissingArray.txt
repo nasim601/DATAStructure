@@ -1,0 +1,26 @@
+/*Missing-array*/
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+  public static void main(String[] args) {
+    int[] arrNum = {1, 2, 4, 5};
+    List<Integer> missingNumbers = findMissingNumbers(arrNum);
+    System.out.println("Missing numbers: " + missingNumbers);
+  }
+
+  public static List<Integer> findMissingNumbers(int[] arrNum) {
+    List<Integer> missingNumbers = new ArrayList<>();
+    int maxNum = arrNum[arrNum.length - 1];
+    boolean[] isPresent = new boolean[maxNum + 1];
+    for (int num : arrNum) {
+      isPresent[num] = true;
+    }
+    for (int i = 1; i < isPresent.length; i++) {
+      if (!isPresent[i]) {
+        missingNumbers.add(i);
+      }
+    }
+    return missingNumbers;
+  }
+}
